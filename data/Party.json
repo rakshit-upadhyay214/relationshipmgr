@@ -1,0 +1,30 @@
+[
+  {
+    "_dataType": "demo"
+  },
+
+  {
+    "_entity" :"PartyType",
+    "partyTypeId" : "PERSON",
+    "description" : "Person"
+  },
+  {
+    "_entity": "PartyType",
+    "partyTypeId" : "ORGANIZATION",
+    "description" : "Organization"
+  },
+
+  {
+    "_entity": "Party",
+    "partyId": "PER123",
+    "partyTypeId": "PERSON",
+    "person": {
+      "_entity" : "person",
+      "partyId": "PER123",
+      "firstName": "John",
+      "lastName": "Doe",
+      "birthDate": "1990-01-01"
+    }
+  }
+
+]
