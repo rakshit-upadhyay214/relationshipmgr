@@ -1,6 +1,25 @@
 [
+
   {
     "_dataType": "demo"
+  },
+
+  {
+    "_entity": "RoleType",
+    "roleTypeId": "CUSTOMER",
+    "description": "Customer"
+  },
+
+  {
+    "_entity": "RoleType",
+    "roleTypeId": "EMPLOYER",
+    "description": "Employer"
+  },
+
+  {
+    "_entity": "RoleType",
+    "roleTypeId": "EMPLOYEE",
+    "description": "Employee"
   },
 
   {
@@ -19,12 +38,36 @@
     "partyId": "PER123",
     "partyTypeId": "PERSON",
     "person": {
-      "_entity" : "person",
-      "partyId": "PER123",
       "firstName": "John",
       "lastName": "Doe",
       "birthDate": "1990-01-01"
-    }
+    },
+    "roles": [
+      {
+        "roleTypeId": "CUSTOMER"
+      }
+    ]
+  },
+  {
+    "_entity": "ContactMechType",
+    "contactMechTypeId" : "POSTAL ADDRESS",
+    "description" : "Postal Address"
+  },
+  {
+    "_entity": "ContactMechType",
+    "contactMechTypeId" : "TELECOM NUMBER",
+    "description" : "Telecom Number"
+  },
+  {
+    "_entity": "ContactMechPurpose",
+    "contactMechPurposeId" : "WORK"
+  },
+  {
+    "_entity": "ContactMechPurpose",
+    "contactMechPurposeId" : "HOME"
+  },
+  {
+    "_entity": "ContactMechPurpose",
+    "contactMechPurposeId" : "OFFICE"
   }
-
 ]

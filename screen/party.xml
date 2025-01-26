@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-3.xsd"
+        require-authentication="anonymous-all">
+<!--    <widgets>-->
+<!--        <label type="h1" text="Hello world!"/>-->
+<!--        <render-mode>-->
+<!--            <text type="html" location="component://relationshipmgr/screen/party/hello.html"/>-->
+<!--        </render-mode>-->
+<!--    </widgets>-->
+    <transition name="createPtyPerson">
+        <service-call name="PartyServices.create#PtyPerson"/>
+        <default-response url="."/>
+    </transition>
+
+    <transition name="createPtyOrganization">
+        <service-call name="PartyServices.create#PtyOrganization"/>
+        <default-response url="."/>
+    </transition>
+
+    <transition name="findParty">
+        <parameter name="partyId" from="context"/>
+        <actions>
+            <entity-find-one entity-name="Party" value-field="partyId"/>
+        </actions>
+        <default-response url="."/>
+    </transition>
+
+<!--    <subscreens>-->
+<!--        <subscreens-item name="addContact" location="component://relationshipmgr/screen/AddContactMech.xml"/>-->
+<!--    </subscreens>-->
+
+    <widgets>
+        <label text="Create Person"/>
+        <form-single name="PtyPerson" transition="createPtyPerson">
+            <auto-fields-service service-name="PartyServices.create#PtyPerson"/>
+            <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
+        </form-single>
+
+        <label text="Find Party"/>
+        <form-single name="Party" transition="findParty">
+            <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
+        </form-single>
+
+        <label text="Create Organization"/>
+        <form-single name="PtyOrganization" transition="createPtyOrganization">
+            <auto-fields-service service-name="PartyServices.create#PtyOrganization"/>
+            <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
+        </form-single>
+
+
+
+
+    </widgets>
+</screen>

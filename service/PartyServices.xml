@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/service-definition-3.xsd">
+
+    <service verb="create" noun="Party" type="entity-auto">
+        <in-parameters>
+            <auto-parameters entity-name="Party"/>
+        </in-parameters>
+        <out-parameters><parameter name="partyId"/></out-parameters>
+    </service>
+
+    <service verb="create" noun="Person" type="entity-auto">
+        <in-parameters>
+            <auto-parameters entity-name="Person"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="partyId"/>
+        </out-parameters>
+    </service>
+
+    <service verb="create" noun="Organization" type="entity-auto">
+        <in-parameters>
+            <auto-parameters entity-name="Organization"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="partyId"/>
+        </out-parameters>
+    </service>
+
+    <service verb="create" noun="PtyPerson" >
+        <in-parameters>
+            <auto-parameters entity-name="Party" include="pk"/>
+            <auto-parameters entity-name="Person" include="nonpk"/>
+            <parameter name="roleTypeId"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="partyId"/>
+        </out-parameters>
+        <actions>
+            <set field="partyTypeId" value="PERSON"/>
+            <service-call name="create#Party" in-map="context"/>
+            <service-call name="create#Person" in-map="context" out-map="context"/>
+            <service-call name="create#PartyRole" in-map="context"/>
+        </actions>
+    </service>
+
+    <service verb="create" noun="PtyOrganization" >
+        <in-parameters>
+            <auto-parameters entity-name="Party" include="pk"/>
+            <auto-parameters entity-name="Organization" include="nonpk"/>
+            <parameter name="roleTypeId"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="partyId"/>
+        </out-parameters>
+        <actions>
+            <set field="partyTypeId" value="ORGANIZATION"/>
+            <service-call name="create#Party" in-map="context"/>
+            <service-call name="create#Organization" in-map="context" out-map="context"/>
+            <service-call name="create#PartyRole" in-map="context"/>
+        </actions>
+    </service>
+
+    <service verb="create" noun="PartyRole" type="entity-auto">
+        <in-parameters>
+            <auto-parameters entity-name="PartyRole"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="roleTypeId"/>
+        </out-parameters>
+    </service>
+
+    <service verb="create" noun="RoleType" type="entity-auto">
+        <in-parameters>
+            <auto-parameters entity-name="RoleType"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="roleTypeId"/>
+        </out-parameters>
+    </service>
+
+    <service verb="create" noun="ContactMech" type="entity-auto">
+        <in-parameters>
+            <auto-parameters entity-name="ContactMech"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="contactMechId"/>
+        </out-parameters>
+    </service>
+
+    <service verb="create" noun="ContactMechType" type="entity-auto">
+        <in-parameters>
+            <auto-parameters entity-name="ContactMechType"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="contactMechTypeId"/>
+        </out-parameters>
+    </service>
+
+    <service verb="create" noun="ContactMechPurpose" type="entity-auto">
+        <in-parameters>
+            <auto-parameters entity-name="ContactMechPurpose"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="contactMechPurposeId"/>
+        </out-parameters>
+    </service>
+
+    <service verb="create" noun="PostalAddress" type="entity-auto">
+        <in-parameters>
+            <auto-parameters entity-name="Postal"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="contactMechId"/>
+        </out-parameters>
+    </service>
+
+    <service verb="create" noun="PartyContactMech" type="entity-auto">
+        <in-parameters>
+            <auto-parameters entity-name="PartyContactMech"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="partyId"/>
+            <parameter name="contactMechTypeId"/>
+        </out-parameters>
+    </service>
+
+    <service verb="create" noun="TelecomNumber" type="entity-auto">
+        <in-parameters>
+            <auto-parameters entity-name="TelecomNumber"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="contactMechId"/>
+        </out-parameters>
+    </service>
+
+    <service verb="create" noun="EmailAddress" type="entity-auto">
+        <in-parameters>
+            <auto-parameters entity-name="EmailAddress"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="contactMechId"/>
+        </out-parameters>
+    </service>
+
+
+
+    <service verb="create" noun="PostalAddressContact">
+        <in-parameters>
+            <auto-parameters entity-name="ContactMech"/>
+            <auto-parameters entity-name="PostalAddress"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="contactMechId"/>
+        </out-parameters>
+        <actions>
+            <service-call name="create#ContactMech" in-map="context"/>
+            <service-call name="create#PostalAddress" in-map="context"/>
+        </actions>
+    </service>
+
+    <service verb="create" noun="TelecomContact">
+        <in-parameters>
+            <auto-parameters entity-name="ContactMech"/>
+            <auto-parameters entity-name="TelecomNumber"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="contactMechId"/>
+        </out-parameters>
+        <actions>
+            <service-call name="create#ContactMech" in-map="context"/>
+            <service-call name="create#TelecomNumber" in-map="context"/>
+        </actions>
+    </service>
+
+    <service verb="create" noun="EmailContact">
+        <in-parameters>
+            <auto-parameters entity-name="ContactMech"/>
+            <auto-parameters entity-name="EmailAddress"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="contactMechId"/>
+        </out-parameters>
+        <actions>
+            <service-call name="create#ContactMech" in-map="context"/>
+            <service-call name="create#EmailAddress" in-map="context"/>
+        </actions>
+    </service>
+
+
+
+</services>

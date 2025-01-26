@@ -8,16 +8,16 @@
         <relationship type="one" related="PartyType" short-alias="type">
             <key-map field-name="partyTypeId"/>
         </relationship>
-        <relationship type="one-nofk" related="moqui.udm.Organization" short-alias="organization"/>
-        <relationship type="one-nofk" related="moqui.udm.Person" short-alias="person"/>
-        <relationship type="many" related="PartyRole" short-alias="roles">
+        <relationship type="one-nofk" title="PtyOrganization" related="Organization" short-alias="organization"/>
+        <relationship type="one-nofk" title="PtyPerson" related="Person" short-alias="person"/>
+        <relationship type="many" title="PtyRole" related="PartyRole" short-alias="roles">
             <key-map field-name="partyTypeId"/>
         </relationship>
         <master>
             <detail relationship="type"/>
-            <detail relationship="organization"/>
-            <detail relationship="person"/>
-            <detail relationship="roles"/>
+            <detail relationship="PtyOrganization#moqui.udm.Organization"/>
+            <detail relationship="PtyPerson#moqui.udm.Person"/>
+            <detail relationship="PtyRole#moqui.udm.PartyRoles"/>
         </master>
     </entity>
 
@@ -31,7 +31,7 @@
         <field name="firstName" type="text-medium"/>
         <field name="lastname" type="text-medium"/>
         <field name="birthDate" type="date"/>
-        <relationship type="one" related="Party" short-alias="person">
+        <relationship type="one" related="Party">
             <key-map field-name="partyId"/>
         </relationship>
     </entity>
@@ -51,7 +51,7 @@
         <relationship type="one" related="Party" short-alias="partyrole">
             <key-map field-name="partyId"/>
         </relationship>
-        <relationship type="one" related="RoleType" short-alias="roletype">
+        <relationship type="many" related="RoleType" short-alias="roletype">
             <key-map field-name="roleTypeId"/>
         </relationship>
     </entity>
@@ -70,20 +70,61 @@
     </entity>
 
     <entity entity-name="ContactMechType" package="moqui.udm">
-        <field name="contactMechId" type="id" is-pk="true"/>
-        <field name="contactMechTypeId" type="id"/>
-        <relationship type="one" related="ContactMechType">
-            <key-map field-name="contactMechTypeId"/>
+        <field name="contactMechTypeId" type="id" is-pk="true"/>
+        <field name="description" type="text-medium"/>
+    </entity>
+
+    <entity entity-name="ContactMechPurpose" package="moqui.udm">
+        <field name="contactMechPurposeId" type="id" is-pk="true"/>
+    </entity>
+
+    <entity entity-name="PartyContactMech" package="moqui.udm">
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="contactMechId" type="id"  is-pk="true"/>
+        <field name="contactMechPurposeId" type="id"  is-pk="true"/>
+        <field name="fromDate" type="date"  is-pk="true"/>
+        <relationship type="one" related="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" related="ContactMech">
+            <key-map field-name="contactMechId"/>
+        </relationship>
+        <relationship type="one" related="ContactMechPurpose">
+            <key-map field-name="contactMechPurposeId"/>
         </relationship>
     </entity>
 
     <entity entity-name="PostalAddress" package="moqui.udm">
         <field name="contactMechId" type="id" is-pk="true"/>
-        <field name="contactMechTypeId" type="id"/>
-        <relationship type="one" related="ContactMechType">
-            <key-map field-name="contactMechTypeId"/>
+        <field name="toName" type="text-medium"/>
+        <field name="attnName" type="text-medium"/>
+        <field name="addressLine1" type="text-long"/>
+        <field name="addressLine2" type="text-long"/>
+        <field name="city" type="text-medium"/>
+        <field name="postalCode" type="text-medium"/>
+        <relationship type="one" related="ContactMech">
+            <key-map field-name="contactMechId"/>
         </relationship>
     </entity>
 
+    <entity entity-name="TelecomNumber" package="moqui.udm">
+        <field name="contactMechId" type="id" is-pk="true"/>
+        <field name="countryCode" type="text-medium"/>
+        <field name="areaCode" type="text-medium"/>
+        <field name="contactNumber" type="text-long"/>
+        <field name="addressLine2" type="text-long"/>
+        <field name="city" type="text-medium"/>
+        <field name="postalCode" type="text-medium"/>
+        <relationship type="one" related="ContactMech">
+            <key-map field-name="contactMechId"/>
+        </relationship>
+    </entity>
 
+    <entity entity-name="EmailAddress" package="moqui.udm">
+        <field name="contactMechId" type="id" is-pk="true"/>
+        <field name="infoString" type="text-medium"/>
+        <relationship type="one" related="ContactMech">
+            <key-map field-name="contactMechId"/>
+        </relationship>
+    </entity>
 </entities>
