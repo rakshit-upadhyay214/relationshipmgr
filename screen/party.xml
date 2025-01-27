@@ -1,55 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-3.xsd"
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-3.xsd"
         require-authentication="anonymous-all">
-<!--    <widgets>-->
-<!--        <label type="h1" text="Hello world!"/>-->
-<!--        <render-mode>-->
-<!--            <text type="html" location="component://relationshipmgr/screen/party/hello.html"/>-->
-<!--        </render-mode>-->
-<!--    </widgets>-->
-    <transition name="createPtyPerson">
-        <service-call name="PartyServices.create#PtyPerson"/>
-        <default-response url="."/>
-    </transition>
 
-    <transition name="createPtyOrganization">
-        <service-call name="PartyServices.create#PtyOrganization"/>
-        <default-response url="."/>
-    </transition>
-
-    <transition name="findParty">
-        <parameter name="partyId" from="context"/>
+<!--    creating person simultaneously with party-->
+    <transition name="createPerson">
         <actions>
-            <entity-find-one entity-name="Party" value-field="partyId"/>
+            <set field="partyTypeEnumId" value="PERSON"/>
+            <service-call name="create#Party" in-map="context" out-map="context"/>
+            <service-call name="create#Person" in-map="context" out-map="context"/>
         </actions>
         <default-response url="."/>
     </transition>
 
-<!--    <subscreens>-->
-<!--        <subscreens-item name="addContact" location="component://relationshipmgr/screen/AddContactMech.xml"/>-->
-<!--    </subscreens>-->
+<!--    Finding Party by party id-->
+    <transition name="findParty">
+        <actions>
+            <service-call name="find#Party" in-map="context" out-map="context"/>
+        </actions>
+        <default-response url="."/>
+    </transition>
+
 
     <widgets>
-        <label text="Create Person"/>
-        <form-single name="PtyPerson" transition="createPtyPerson">
-            <auto-fields-service service-name="PartyServices.create#PtyPerson"/>
-            <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
-        </form-single>
 
-        <label text="Find Party"/>
-        <form-single name="Party" transition="findParty">
-            <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
-        </form-single>
-
-        <label text="Create Organization"/>
-        <form-single name="PtyOrganization" transition="createPtyOrganization">
-            <auto-fields-service service-name="PartyServices.create#PtyOrganization"/>
-            <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
-        </form-single>
+<!--        Create Person as a Party-->
+        <container-dialog id="person" button-text="createPerson">
+            <form-single name="Person" transition="createPerson">
+                <auto-fields-entity entity-name="custom.udm.Person" field-type="edit"/>
+                <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
+            </form-single>
+        </container-dialog>
 
 
-
-
+<!--        Find Party-->
+        <container-dialog id="party" button-text="FindParty">
+            <form-single name="FindParty" transition="findParty">
+                <aut
+            </form-single>
+        </container-dialog>
     </widgets>
 </screen>

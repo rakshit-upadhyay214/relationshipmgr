@@ -3,11 +3,8 @@
 <moqui-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/moqui-conf-3.xsd">
     <screen-facade>
         <screen location="component://webroot/screen/webroot/apps.xml">
-            <subscreens-item name="Party" menu-title="Party" menu-index="99"
-                             location="component://relationshipmgr/screen/Party.xml"/>
-
-            <subscreens-item name="ContactMech" menu-title="ContactMech" menu-index="99"
-                             location="component://relationshipmgr/screen/AddContactMech.xml"/>
+            <subscreens-item name="party" menu-title="Party" menu-index="97"
+                             location="component://relationshipmgr/screen/party.xml"/>
         </screen>
     </screen-facade>
 </moqui-conf>
