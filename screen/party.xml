@@ -12,30 +12,71 @@
         <default-response url="."/>
     </transition>
 
-<!--    Finding Party by party id-->
-    <transition name="findParty">
+<!--   creating Org as a party  -->
+    <transition name="createOrg">
         <actions>
-            <service-call name="find#Party" in-map="context" out-map="context"/>
+            <set field="partyTypeEnumId" value="PARTYGROUP"/>
+            <service-call name="create#Party" in-map="context" out-map="context"/>
+            <service-call name="create#PartyGroup" in-map="context" out-map="context"/>
         </actions>
         <default-response url="."/>
     </transition>
 
+<!--   adding Postal Address as a Contact  -->
+    <transition name="addPostal">
+        <actions>
+            <set field="contactMechTypeEnumId" value="PostalAddress"/>
+            <service-call name="create#ContactMech" in-map="context" out-map="context"/>
+            <service-call name="create#PostalAddress" in-map="context" out-map="context"/>
+            <service-call name="create#PartyContactMech" in-map="context" out-map="context"/>
+        </actions>
+        <default-response url="."/>
+    </transition>
+
+<!--   adding Telecom Number as a Contact  -->
+    <transition name="addTelecom">
+        <actions>
+            <set field="contactMechTypeEnumId" value="TelecomNumber"/>
+            <service-call name="create#ContactMech" in-map="context" out-map="context"/>
+            <service-call name="create#TelecomNumber" in-map="context" out-map="context"/>
+            <service-call name="create#PartyContactMech" in-map="context" out-map="context"/>
+        </actions>
+        <default-response url="."/>
+    </transition>
 
     <widgets>
-
 <!--        Create Person as a Party-->
         <container-dialog id="person" button-text="createPerson">
             <form-single name="Person" transition="createPerson">
-                <auto-fields-entity entity-name="custom.udm.Person" field-type="edit"/>
+                <auto-fields-entity entity-name="custom.udm.Person" field-type="edit" include="nonpk"/>
+                <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
+            </form-single>
+        </container-dialog>
+
+<!--     Create Organization as a party-->
+        <container-dialog id="organization" button-text="createOrg">
+            <form-single name="Org" transition="createOrg">
+                <auto-fields-entity entity-name="custom.udm.PartyGroup" field-type="edit" include="nonpk"/>
                 <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
             </form-single>
         </container-dialog>
 
 
-<!--        Find Party-->
-        <container-dialog id="party" button-text="FindParty">
-            <form-single name="FindParty" transition="findParty">
-                <aut
+<!--     Add Postal Address as a Contact-->
+        <container-dialog id="cmtPostal" button-text="Postal">
+            <form-single name="Postal" transition="addPostal">
+                <auto-fields-entity entity-name="custom.udm.PartyContactMech" field-type="edit"/>
+                <auto-fields-entity entity-name="custom.udm.PostalAddress" field-type="edit" include="nonpk"/>
+                <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
+            </form-single>
+        </container-dialog>
+
+<!--     Add TelecomNumber as a Contact-->
+        <container-dialog id="cmtTelecom" button-text="Telecom">
+            <form-single name="Telecom" transition="addTelecom">
+                <auto-fields-entity entity-name="custom.udm.PartyContactMech" field-type="edit"/>
+                <auto-fields-entity entity-name="custom.udm.TelecomNumber" field-type="edit" />
+                <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
             </form-single>
         </container-dialog>
     </widgets>
