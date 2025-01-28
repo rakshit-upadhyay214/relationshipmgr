@@ -65,7 +65,7 @@
 <!--     Add Postal Address as a Contact-->
         <container-dialog id="cmtPostal" button-text="Postal">
             <form-single name="Postal" transition="addPostal">
-                <auto-fields-entity entity-name="custom.udm.PartyContactMech" field-type="edit"/>
+                <auto-fields-entity entity-name="custom.udm.PartyContactMech" field-type="edit" auto-columns="false" />
                 <auto-fields-entity entity-name="custom.udm.PostalAddress" field-type="edit" include="nonpk"/>
                 <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
             </form-single>
